@@ -1,4 +1,7 @@
 .elmt-modal-trick {
+  .modal-dialog {
+    max-width: 80%;
+  }
   .modal-header {
     background-position: center;
     background-repeat: no-repeat;
@@ -15,5 +18,21 @@
       top: calc(50% - 17px);
       width: 100%;
     }
+  }
+
+
+  .modal-body {
+    article, .informations, .comments {
+      padding: 10px 50px;
+    }
+    .comments > div > form {
+      justify-content: center;
+    }
+    .comments > div {
+      border-bottom: 2px solid black;
+      border-top: 2px solid black;
+      padding: 40px 20px;
+    }
+
   }
 }
