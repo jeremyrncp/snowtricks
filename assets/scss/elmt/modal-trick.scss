@@ -1,0 +1,19 @@
+.elmt-modal-trick {
+  .modal-header {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 350px;
+    position: relative;
+
+    .modal-title {
+      color: white;
+      font-size: 2em;
+      height: 35px;
+      position: absolute;
+      text-align: center;
+      top: calc(50% - 17px);
+      width: 100%;
+    }
+  }
+}
