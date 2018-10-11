@@ -40,12 +40,8 @@
                 </ul>
             </div>
         </nav>
-        <header>
-            <h1>Phrase d'accroche</h1>
-            <a class="elmt-goto" href="/#tricks">
-                <i class="fas fa-chevron-circle-down fa-3x text-white"></i>
-            </a>
-        </header>
+
+        {% block header %}{% endblock %}
         <section>
         {% block body %}{% endblock %}
         </section>
@@ -54,6 +50,7 @@
                Copyright SnowTricks - all rights reserved
             </p>
         </footer>
+        {% include "layout/elmt/navbar-footer.html.twig" %}
         <script type="text/javascript" src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>

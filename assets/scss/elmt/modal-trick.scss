@@ -25,14 +25,38 @@
     article, .informations, .comments {
       padding: 10px 50px;
     }
-    .comments > div > form {
-      justify-content: center;
-    }
-    .comments > div {
+
+    .comments > form {
       border-bottom: 2px solid black;
       border-top: 2px solid black;
+      justify-content: center;
       padding: 40px 20px;
     }
 
+
+    /* Mobile first */
+    @include media-max($mobileBreakpoint) {
+      .medias .row {
+        display: none;
+      }
+      .medias > button {
+        display: inline-block;
+      }
+    }
+
+    @include media-min($mobileBreakpoint) {
+      .medias > button {
+        display: none;
+      }
+    }
+
+    .medias {
+      a {
+        background-size: cover;
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
   }
 }
