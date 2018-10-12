@@ -1,0 +1,12 @@
+body > section {
+  padding: 40px 20px;
+}
+
+.content {
+  padding: 40px 0;
+  position: relative;
+
+  .elmt-goto {
+    color: $colorBasicLink;
+  }
+}

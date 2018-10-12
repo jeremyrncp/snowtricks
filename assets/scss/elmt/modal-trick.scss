@@ -1,0 +1,62 @@
+.elmt-modal-trick {
+  .modal-dialog {
+    max-width: 80%;
+  }
+  .modal-header {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 350px;
+    position: relative;
+
+    .modal-title {
+      color: white;
+      font-size: 2em;
+      height: 35px;
+      position: absolute;
+      text-align: center;
+      top: calc(50% - 17px);
+      width: 100%;
+    }
+  }
+
+
+  .modal-body {
+    article, .informations, .comments {
+      padding: 10px 50px;
+    }
+
+    .comments > form {
+      border-bottom: 2px solid black;
+      border-top: 2px solid black;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+
+    /* Mobile first */
+    @include media-max($mobileBreakpoint) {
+      .medias .row {
+        display: none;
+      }
+      .medias > button {
+        display: inline-block;
+      }
+    }
+
+    @include media-min($mobileBreakpoint) {
+      .medias > button {
+        display: none;
+      }
+    }
+
+    .medias {
+      a {
+        background-size: cover;
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
