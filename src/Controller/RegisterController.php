@@ -12,6 +12,11 @@ class RegisterController extends AbstractController
      */
     public function index()
     {
-        return $this->render('register.html.twig' );
+        $registerForm = $this->get("form.factory")->create("App\Form\RegisterType");
+
+        return $this->render('register.html.twig', [
+            "form" => $registerForm->createView()
+            ]
+        );
     }
 }

@@ -24,3 +24,7 @@ npm-debug.log
 yarn-error.log
 yarn.lock
 ###< symfony/webpack-encore-pack ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+###< phpunit/phpunit ###
