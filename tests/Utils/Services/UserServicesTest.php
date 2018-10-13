@@ -18,7 +18,6 @@ use Symfony\Component\Security\Core\User\User;
 
 class UserServicesTest extends KernelTestCase
 {
-
     public function testShouldObtainAnErrorWhenUsernameAlreadyUsed()
     {
         $this->expectException(UserUserNameAlreadyUsedException::class);

@@ -20,8 +20,8 @@ class Mailer
 {
     const PATH_TEMPLATE_MAIL = "email";
     const DEFAULT_SENT_EMAIL = "ba729208b7-aad1bd@inbox.mailtrap.io";
-    const DEFAULT_SENT_NAME = "No-reply BlogOCR";
-    const DEFAULT_REPLYTO_EMAIL = "contact@blogocr.com";
+    const DEFAULT_SENT_NAME = "No-reply SnowTricks";
+    const DEFAULT_REPLYTO_EMAIL = "contact@snowtricks.com";
     /**
      * @var array
      */
@@ -42,7 +42,7 @@ class Mailer
      * Mailer constructor.
      * @param ValidatorInterface $validator
      */
-    public function __construct( ValidatorInterface $validator, InfrastructureRenderInterface $render )
+    public function __construct(ValidatorInterface $validator, InfrastructureRenderInterface $render)
     {
         $this -> validator = $validator;
         $this -> render = $render;
@@ -59,16 +59,17 @@ class Mailer
      *
      * @throws EmailInvalidParametersException
      */
-    public function rulesValidationInMailParameters( array $to, string $from, string $subject, string $content, string $replyTo = null ) {
+    public function rulesValidationInMailParameters(array $to, string $from, string $subject, string $content, string $replyTo = null)
+    {
         $Mail = new Mail();
-        $Mail -> setReplyTo( $replyTo );
-        $Mail -> setSubject( $subject );
-        $Mail -> setFrom( $from );
-        $Mail -> setContent( $content );
-        $Mail -> setTo( $to );
+        $Mail -> setReplyTo($replyTo);
+        $Mail -> setSubject($subject);
+        $Mail -> setFrom($from);
+        $Mail -> setContent($content);
+        $Mail -> setTo($to);
         $ValidationsRules = $this -> validator -> validate($Mail);
-        if( count($ValidationsRules) > 0 ) {
-            throw new EmailInvalidParametersException(count($ValidationsRules)." rules were not respected ");
+        if(count($ValidationsRules) > 0) {
+            throw new EmailInvalidParametersException(count($ValidationsRules)." rules were not respected");
         }
         return true;
     }

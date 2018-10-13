@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints as Asserts;
 
 /**
@@ -46,7 +45,6 @@ class User
     /**
      * @ORM\Column(type="string", length=200, unique=true)
      * @Asserts\NotBlank()
-     * @Asserts\
      * @Asserts\Type(type="string")
      */
     private $userName;
@@ -65,12 +63,15 @@ class User
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Asserts\NotBlank()
+     * @Asserts\Type(type="string")
      */
     private $token;
 
     /**
      * @ORM\Column(type="datetime")
      * @Asserts\DateTime()
+     * @Asserts\NotBlank()
      */
     private $dateCreate;
 

@@ -19,8 +19,6 @@ use App\Utils\Utils\StringUtils;
 class UserServices implements ObservableInterface
 {
 
-    use ObservableTrait;
-
     /**
      * @var UserRepository
      */
@@ -56,7 +54,6 @@ class UserServices implements ObservableInterface
         $this->userRepository->getEntityManager()->persist($user);
         $this->userRepository->getEntityManager()->flush();
 
-        $this->notifyObservator();
         //TODO - envoyer un email de validation
     }
 
