@@ -67,7 +67,7 @@ class MailerFactory
      * @return LoggerMailer
      */
     private function getLoggerMailer(): LoggerMailer {
-        return new LoggerMailer(  $this -> getValidator(), $this -> container -> get("logger.debug"),$this -> render );
+        return new LoggerMailer(  $this -> getValidator(), $this -> container -> get("monolog.logger.debug"),$this -> render );
     }
     /**
      * @return SwiftMailerMailer

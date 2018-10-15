@@ -11,12 +11,18 @@ namespace App\Tests\Utils\Services\Notifications\User;
 use App\Entity\User;
 use App\Exception\EntityNotValidException;
 use App\Exception\UndefinedEntityException;
+use App\Infrastructure\Mailer\MailerFactory;
+use App\Infrastructure\Render\RenderFactory;
 use App\Infrastructure\Validator\ValidatorFactory;
 use App\Utils\Services\Notifications\User\AccountValidationUserNotifications;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class AccountValidationUserNotificationsTest extends TestCase
+class AccountValidationUserNotificationsTest extends KernelTestCase
 {
+    public function setUp()
+    {
+        self::bootKernel();
+    }
 
     public function testShouldObtainAsuccessWhenUserEntityIsValidAndNotificationCorrectlySent()
     {
@@ -51,7 +57,17 @@ class AccountValidationUserNotificationsTest extends TestCase
         $validatorFactory = new ValidatorFactory();
         $validator = $validatorFactory->create();
 
-        return new AccountValidationUserNotifications($validator);
+        $mailerFactory = new MailerFactory(self::$container);
+        $mailer = $mailerFactory->create("Logger");
+
+        $renderFactory = new RenderFactory(self::$container);
+        $render = $renderFactory->create();
+
+        return new AccountValidationUserNotifications(
+            $validator,
+            $mailer,
+            $render
+        );
     }
 
     /**

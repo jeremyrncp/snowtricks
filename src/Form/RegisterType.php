@@ -35,11 +35,6 @@ class RegisterType extends AbstractType
             ->add('avatar', FileType::class, [
                 'label' => 'Your avatar'
             ])
-            ->add('Sign in', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-block btn-success'
-                ]
-            ])
         ;
     }
 

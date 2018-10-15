@@ -12,6 +12,7 @@ use App\Exception\UndefinedEntityException;
 use App\Infrastructure\InfrastructureMailerInterface;
 use App\Infrastructure\InfrastructureRenderInterface;
 use App\Infrastructure\InfrastructureValidatorInterface;
+use App\Infrastructure\Mailer\Mailer;
 use App\Utils\Services\Notifications\NotificationsInterface;
 
 class AccountValidationUserNotifications extends UserNotifications implements NotificationsInterface
@@ -48,5 +49,16 @@ class AccountValidationUserNotifications extends UserNotifications implements No
 
         $this->mailer->setSubject(self::SUBJECT_EMAIL);
         $this->mailer->addTo($this->user->getEmail());
+        $this->mailer->setSender(Mailer::DEFAULT_REPLYTO_EMAIL);
+        $this->mailer->setContent(
+            $this->getTemplate(
+                "notifications/account-validation.html.twig",
+                [
+                    "token" => $this->user->getToken(),
+                    "subject" => self::SUBJECT_EMAIL
+                ]
+            )
+        );
+        $this->mailer->send();
     }
 }

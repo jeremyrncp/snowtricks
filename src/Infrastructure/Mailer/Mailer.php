@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class Mailer
 {
     const PATH_TEMPLATE_MAIL = "email";
-    const DEFAULT_SENT_EMAIL = "ba729208b7-aad1bd@inbox.mailtrap.io";
+    const DEFAULT_SENT_EMAIL = "no-reply@snowtricks.com";
     const DEFAULT_SENT_NAME = "No-reply SnowTricks";
     const DEFAULT_REPLYTO_EMAIL = "contact@snowtricks.com";
     /**

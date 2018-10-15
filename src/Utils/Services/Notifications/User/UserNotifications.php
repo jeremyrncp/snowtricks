@@ -67,4 +67,14 @@ class UserNotifications implements UserNotificationsInterface
             throw new UndefinedEntityException("User must be defined before send notification");
         }
     }
+
+    /**
+     * @param string $nameTemplate
+     * @param array $params
+     * @return string
+     */
+    protected function getTemplate(string $nameTemplate, array $params): string
+    {
+        return $this->render->renderView($nameTemplate, $params);
+    }
 }

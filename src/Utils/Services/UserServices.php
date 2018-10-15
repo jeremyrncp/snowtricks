@@ -16,7 +16,7 @@ use App\Utils\ObservableInterface;
 use App\Utils\ObservableTrait;
 use App\Utils\Utils\StringUtils;
 
-class UserServices implements ObservableInterface
+class UserServices
 {
 
     /**
