@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: admin4111687
- * Date: 02/08/2018
- * Time: 13:46
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
  */
 
 namespace App\Exception;

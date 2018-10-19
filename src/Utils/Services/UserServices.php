@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Jérémy
- * Date: 12/10/2018
- * Time: 11:38
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
  */
 
 namespace App\Utils\Services;
@@ -11,9 +9,9 @@ namespace App\Utils\Services;
 use App\Entity\User;
 use App\Exception\UserEmailAlreadyUsedException;
 use App\Exception\UserUserNameAlreadyUsedException;
+use App\Infrastructure\InfrastructureEntityManagerInterface;
 use App\Repository\UserRepository;
-use App\Utils\ObservableInterface;
-use App\Utils\ObservableTrait;
+use App\Utils\Services\Notifications\User\AccountValidationUserNotifications;
 use App\Utils\Utils\StringUtils;
 
 class UserServices
@@ -25,44 +23,65 @@ class UserServices
     private $userRepository;
 
     /**
+     * @var AccountValidationUserNotifications
+     */
+    private $accountValidationUserNotifications;
+
+    /**
+     * @var InfrastructureEntityManagerInterface
+     */
+    private $infrastructureEntityManager;
+
+    /**
      * UserServices constructor.
      * @param UserRepository $userRepository
+     * @param AccountValidationUserNotifications $accountValidationUserNotifications
+     * @param InfrastructureEntityManagerInterface $infrastructureEntityManager
      */
     public function __construct(
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        AccountValidationUserNotifications $accountValidationUserNotifications,
+        InfrastructureEntityManagerInterface $infrastructureEntityManager
     ) {
         $this->userRepository = $userRepository;
+        $this->accountValidationUserNotifications = $accountValidationUserNotifications;
+        $this->infrastructureEntityManager = $infrastructureEntityManager;
     }
 
     /**
      * @param User $user
      * @throws UserEmailAlreadyUsedException
      * @throws UserUserNameAlreadyUsedException
+     * @throws \App\Exception\EntityNotValidException
+     * @throws \App\Exception\UndefinedEntityException
      * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \App\Exception\ORMException
      */
     public function register(User $user)
     {
         $getUser = $this->userRepository->findUserByEmailAndUserName($user);
 
-        $this->userIsRegistrable($user, $getUser);
+        if (!is_null($getUser)) {
+            $this->reasonsWhyUserIsntRegistrable($user, $getUser);
+        }
 
         $token = StringUtils::getToken();
         $user->setDateCreate(new \DateTime());
         $user->setToken($token);
 
-        $this->userRepository->getEntityManager()->persist($user);
-        $this->userRepository->getEntityManager()->flush();
+        $this->infrastructureEntityManager->persist($user);
+        $this->infrastructureEntityManager->flush();
 
-        //TODO - envoyer un email de validation
+        $this->accountValidationUserNotifications->setUser($user);
+        $this->accountValidationUserNotifications->send();
     }
 
     /**
      * @param User $user
-     * @param $getUser
+     * @param User $getUser
      * @throws UserEmailAlreadyUsedException
      */
-    public function userEmailAlreadyExisted(User $user, $getUser): void
+    public function userEmailAlreadyExisted(User $user, User $getUser): void
     {
         if ($getUser->getEmail() === $user->getEmail()) {
             throw new UserEmailAlreadyUsedException("Your email is already used");
@@ -71,10 +90,10 @@ class UserServices
 
     /**
      * @param User $user
-     * @param $getUser
+     * @param User $getUser
      * @throws UserUserNameAlreadyUsedException
      */
-    public function userUserNameAlreadyExisted(User $user, $getUser): void
+    public function userUserNameAlreadyExisted(User $user, User $getUser): void
     {
         if ($user->getUserName() === $getUser->getUserName()) {
             throw new UserUserNameAlreadyUsedException("UserName already used");
@@ -87,10 +106,9 @@ class UserServices
      * @throws UserEmailAlreadyUsedException
      * @throws UserUserNameAlreadyUsedException
      */
-    public function userIsRegistrable(User $user, $getUser): void
+    public function reasonsWhyUserIsntRegistrable(User $user, User $getUser): void
     {
         $this->userEmailAlreadyExisted($user, $getUser);
-
         $this->userUserNameAlreadyExisted($user, $getUser);
     }
 }

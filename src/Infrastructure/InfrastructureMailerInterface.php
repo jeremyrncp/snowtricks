@@ -1,10 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: admin4111687
- * Date: 15/08/2018
- * Time: 20:16
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
  */
+
 namespace App\Infrastructure;
 
 use App\Entity\ValueObject\Mail;

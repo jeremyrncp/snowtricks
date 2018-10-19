@@ -1,11 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Jérémy
- * Date: 12/10/2018
- * Time: 15:16
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
  */
-
 namespace App\Utils;
 
 interface ObservatorInterface

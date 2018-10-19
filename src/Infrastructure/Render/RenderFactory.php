@@ -1,14 +1,13 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: admin4111687
- * Date: 21/08/2018
- * Time: 16:31
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
  */
 
 namespace App\Infrastructure\Render;
 
 use App\Exception\InfrastructureAdapterException;
+use App\Infrastructure\InfrastructureRenderInterface;
 use Psr\Container\ContainerInterface;
 
 class RenderFactory
@@ -54,7 +53,7 @@ class RenderFactory
     }
 
     /**
-     * @return TwigRender
+     * @return InfrastructureRenderInterface
      */
     private function getTwigRender()
     {

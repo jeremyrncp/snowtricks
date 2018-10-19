@@ -1,11 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: admin4111687
- * Date: 21/08/2018
- * Time: 15:52
- */
 
+/**
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
+ */
 namespace App\Infrastructure;
 
 interface InfrastructureRenderInterface

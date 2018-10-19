@@ -8,9 +8,15 @@
 
 namespace App\Tests\Utils\Services;
 
+use App\Exception\InvalidFieldException;
 use App\Exception\UserEmailAlreadyUsedException;
 use App\Exception\UserUserNameAlreadyUsedException;
+use App\Infrastructure\EntityManager\DoctrineEntityManager;
+use App\Infrastructure\Mailer\MailerFactory;
+use App\Infrastructure\Render\RenderFactory;
+use App\Infrastructure\Validator\ValidatorFactory;
 use App\Repository\UserRepository;
+use App\Utils\Services\Notifications\User\AccountValidationUserNotifications;
 use App\Utils\Services\UserServices;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\User\User;
@@ -18,24 +24,49 @@ use Symfony\Component\Security\Core\User\User;
 
 class UserServicesTest extends KernelTestCase
 {
+
+    public function setUp()
+    {
+        self::bootKernel();
+    }
+
     public function testShouldObtainAnErrorWhenUsernameAlreadyUsed()
     {
         $this->expectException(UserUserNameAlreadyUsedException::class);
 
-        $UserServices = new UserServices($this -> getMockRepositoryWithFindUser(
-            $this->getUserAlreadyRegister()
-        ));
+        $UserServices = new UserServices(
+            $this -> getMockRepositoryWithFindUser(
+                $this->getUserAlreadyRegister()
+            ),
+            $this->getAccountValidationUserNotifications(),
+            $this->getEntityManager()
+        );
         $user = $this->getUserAlreadyRegister();
         $user->setEmail("emailnotused@test.com");
         $UserServices->register($user);
     }
+
+    /**
+     * @throws UserEmailAlreadyUsedException
+     * @throws UserUserNameAlreadyUsedException
+     * @throws \App\Exception\EntityNotValidException
+     * @throws \App\Exception\InfrastructureAdapterException
+     * @throws \App\Exception\UndefinedEntityException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function testShouldObtainAnErrorWhenEmailIsAlreadyUsed()
     {
         $this->expectException(UserEmailAlreadyUsedException::class);
 
-        $UserServices = new UserServices($this -> getMockRepositoryWithFindUser(
-            $this->getUserAlreadyRegister()
-        ));
+        $UserServices = new UserServices(
+            $this -> getMockRepositoryWithFindUser(
+                $this->getUserAlreadyRegister()
+            ),
+            $this->getAccountValidationUserNotifications(),
+            $this->getEntityManager()
+        );
         $UserServices->register($this->getUserAlreadyRegister());
     }
 
@@ -47,6 +78,27 @@ class UserServicesTest extends KernelTestCase
 
         return $mockUserRepository;
     }
+
+    /**
+     * @throws \App\Exception\InfrastructureAdapterException
+     */
+    private function getAccountValidationUserNotifications()
+    {
+        $validatorFactory = new ValidatorFactory();
+        $validator = $validatorFactory->create();
+
+        $mailerFactory = new MailerFactory(self::$container);
+        $mailer = $mailerFactory->create("Logger");
+
+        $renderFactory = new RenderFactory(self::$container);
+        $render = $renderFactory->create();
+
+        return new AccountValidationUserNotifications(
+            $validator,
+            $mailer,
+            $render
+        );
+    }
     private function getUserAlreadyRegister()
     {
         $user = new \App\Entity\User();
@@ -54,9 +106,12 @@ class UserServicesTest extends KernelTestCase
         $user -> setEmail("contact@test.com");
         $user -> setFirstName("Martin");
         $user -> setLastName("Durand");
-        $user -> setPassword("test");
+        $user -> setPassword("validpassword");
         $user -> setUserName("phpunit");
 
         return $user;
+    }
+    private function getEntityManager() {
+        return $this->createMock(DoctrineEntityManager::class);
     }
 }

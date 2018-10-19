@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Asserts;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -39,6 +40,12 @@ class User
      * @ORM\Column(type="text")
      * @Asserts\NotBlank()
      * @Asserts\Type(type="string")
+     * @PasswordRequirements(
+     *  requireLetters=true,
+     *  requireNumbers=true,
+     *  requireSpecialCharacter=true,
+     *  minLength=8
+     *  )
      */
     private $password;
 
@@ -46,6 +53,11 @@ class User
      * @ORM\Column(type="string", length=200, unique=true)
      * @Asserts\NotBlank()
      * @Asserts\Type(type="string")
+     * @Asserts\Regex(
+     *     pattern="/^([A-Za-z]*)$/",
+     *     match=true,
+     *     message="Your username must contain letters but not contain digit or other caracter"
+     * )
      */
     private $userName;
 
@@ -63,7 +75,6 @@ class User
 
     /**
      * @ORM\Column(type="string", length=40)
-     * @Asserts\NotBlank()
      * @Asserts\Type(type="string")
      */
     private $token;
@@ -71,7 +82,6 @@ class User
     /**
      * @ORM\Column(type="datetime")
      * @Asserts\DateTime()
-     * @Asserts\NotBlank()
      */
     private $dateCreate;
 
@@ -79,7 +89,9 @@ class User
     /**
      * @ORM\Column(type="blob")
      * @Asserts\Image(
-     * mimeTypes="image/png, image/jpeg"), maxHeight="500", minHeight="500"
+     *     mimeTypes={"image/png", "image/jp2", "image/jpm", "image/jpx"},
+     *     maxHeight="500",
+     *     maxWidth="500"
      * )
      */
     private $avatar;

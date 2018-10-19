@@ -1,11 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: admin4111687
- * Date: 07/08/2018
- * Time: 14:59
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
  */
-
 namespace App\Utils\Generic;
 
 use App\Exception\TypeErrorException;

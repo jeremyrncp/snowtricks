@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Jérémy
- * Date: 13/10/2018
- * Time: 12:18
+ * Crée par Jérémy Gaultier <contact@webmezenc.com>
+ * Tous droits réservés
  */
 
 namespace App\Utils\Services\Notifications\User;
