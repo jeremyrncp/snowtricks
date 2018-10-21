@@ -11,10 +11,27 @@ use App\Exception\CopyException;
 use App\Exception\FileNotExistException;
 use App\Exception\InvalidMimeTypeException;
 use App\Exception\PathNotExistException;
+use App\Exception\UndefinedParameterException;
 
 class CopyFilesServicesGeneric implements CopyFilesServicesGenericInterface
 {
     const MIME_TYPE_VALID = ["image/jpg", "image/png"];
+
+    /**
+     * @var string
+     */
+    private $pathDestination;
+
+
+    /**
+     * @param string $pathDestination
+     * @throws PathNotExistException
+     */
+    public function setPathDestination(string $pathDestination)
+    {
+        $this->isValidDestinationPath($pathDestination);
+        $this->pathDestination = $pathDestination;
+    }
 
     /**
      * @param string $tmpFilePath
@@ -25,15 +42,18 @@ class CopyFilesServicesGeneric implements CopyFilesServicesGenericInterface
      * @throws InvalidMimeTypeException
      * @throws PathNotExistException
      */
-    public function copyToLocalAfterValidityFile(string $tmpFilePath, string $pathDestination): string
+    public function copyToLocalAfterCheckValidityFile(string $tmpFilePath): string
     {
+        if (!isset($this->pathDestination)) {
+            throw new UndefinedParameterException("pathDefinition must be defined");
+        }
+
         $this->isTmpFileExist($tmpFilePath);
-        $this->isValidDestinationPath($pathDestination);
 
         $finfo = new \finfo();
         $this->isValidMimeType($tmpFilePath, $finfo);
 
-        return $this->defineNameFileAndCopy($tmpFilePath, $pathDestination, $finfo);
+        return $this->defineNameFileAndCopy($tmpFilePath, $this->pathDestination, $finfo);
     }
 
     /**

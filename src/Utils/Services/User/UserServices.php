@@ -4,13 +4,15 @@
  * Tous droits réservés
  */
 
-namespace App\Utils\Services;
+namespace App\Utils\Services\User;
 
 use App\Entity\User;
 use App\Exception\UserEmailAlreadyUsedException;
 use App\Exception\UserUserNameAlreadyUsedException;
 use App\Infrastructure\InfrastructureEntityManagerInterface;
 use App\Repository\UserRepository;
+use App\Utils\Generic\EncryptionServicesGeneric;
+use App\Utils\Generic\Files\CopyFilesServicesGenericInterface;
 use App\Utils\Services\Notifications\User\AccountValidationUserNotifications;
 use App\Utils\Utils\StringUtils;
 
@@ -33,19 +35,27 @@ class UserServices
     private $infrastructureEntityManager;
 
     /**
+     * @var CopyFilesServicesGenericInterface
+     */
+    private $copyFilesServicesGeneric;
+
+    /**
      * UserServices constructor.
      * @param UserRepository $userRepository
      * @param AccountValidationUserNotifications $accountValidationUserNotifications
      * @param InfrastructureEntityManagerInterface $infrastructureEntityManager
+     * @param CopyFilesServicesGenericInterface $copyFilesServicesGeneric
      */
     public function __construct(
         UserRepository $userRepository,
         AccountValidationUserNotifications $accountValidationUserNotifications,
-        InfrastructureEntityManagerInterface $infrastructureEntityManager
+        InfrastructureEntityManagerInterface $infrastructureEntityManager,
+        CopyFilesServicesGenericInterface $copyFilesServicesGeneric
     ) {
         $this->userRepository = $userRepository;
         $this->accountValidationUserNotifications = $accountValidationUserNotifications;
         $this->infrastructureEntityManager = $infrastructureEntityManager;
+        $this->copyFilesServicesGeneric = $copyFilesServicesGeneric;
     }
 
     /**
@@ -69,11 +79,17 @@ class UserServices
         $user->setDateCreate(new \DateTime());
         $user->setToken($token);
 
+        $user->setPassword(
+            EncryptionServicesGeneric::passwordEncrypt($user->getPassword())
+        );
+
+        $this->copyAvatarToLocalPath($user);
+
+
         $this->infrastructureEntityManager->persist($user);
         $this->infrastructureEntityManager->flush();
 
-        $this->accountValidationUserNotifications->setUser($user);
-        $this->accountValidationUserNotifications->send();
+        $this->sendAccountValidationNotification($user);
     }
 
     /**
@@ -81,7 +97,7 @@ class UserServices
      * @param User $getUser
      * @throws UserEmailAlreadyUsedException
      */
-    public function userEmailAlreadyExisted(User $user, User $getUser): void
+    private function userEmailAlreadyExisted(User $user, User $getUser): void
     {
         if ($getUser->getEmail() === $user->getEmail()) {
             throw new UserEmailAlreadyUsedException("Your email is already used");
@@ -93,7 +109,7 @@ class UserServices
      * @param User $getUser
      * @throws UserUserNameAlreadyUsedException
      */
-    public function userUserNameAlreadyExisted(User $user, User $getUser): void
+    private function userUserNameAlreadyExisted(User $user, User $getUser): void
     {
         if ($user->getUserName() === $getUser->getUserName()) {
             throw new UserUserNameAlreadyUsedException("UserName already used");
@@ -106,9 +122,31 @@ class UserServices
      * @throws UserEmailAlreadyUsedException
      * @throws UserUserNameAlreadyUsedException
      */
-    public function reasonsWhyUserIsntRegistrable(User $user, User $getUser): void
+    private function reasonsWhyUserIsntRegistrable(User $user, User $getUser): void
     {
         $this->userEmailAlreadyExisted($user, $getUser);
         $this->userUserNameAlreadyExisted($user, $getUser);
+    }
+
+    /**
+     * @param User $user
+     * @throws \App\Exception\EntityNotValidException
+     * @throws \App\Exception\UndefinedEntityException
+     */
+    private function sendAccountValidationNotification(User $user): void
+    {
+        $this->accountValidationUserNotifications->setUser($user);
+        $this->accountValidationUserNotifications->send();
+    }
+
+    /**
+     * @param User $user
+     */
+    private function copyAvatarToLocalPath(User $user): void
+    {
+        $avatarFilePath = $this->copyFilesServicesGeneric->copyToLocalAfterCheckValidityFile(
+            $user->getAvatar()
+        );
+        $user->setAvatar($avatarFilePath);
     }
 }

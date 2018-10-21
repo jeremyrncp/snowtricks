@@ -9,5 +9,5 @@ namespace App\Utils\Generic\Files;
 
 interface CopyFilesServicesGenericInterface
 {
-    public function copyToLocalAfterValidityFile(string $tmpFile, string $pathDestination): string;
+    public function copyToLocalAfterCheckValidityFile(string $tmpFile): string;
 }

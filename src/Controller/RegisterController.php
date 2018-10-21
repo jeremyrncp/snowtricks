@@ -7,8 +7,10 @@ use App\Infrastructure\EntityManager\EntityManagerFactory;
 use App\Infrastructure\Mailer\MailerFactory;
 use App\Infrastructure\Render\RenderFactory;
 use App\Infrastructure\Validator\ValidatorFactory;
+use App\Utils\Generic\Files\CopyFilesServicesGeneric;
+use App\Utils\Generic\Files\CopyFilesServicesGenericInterface;
 use App\Utils\Services\Notifications\User\AccountValidationUserNotifications;
-use App\Utils\Services\UserServices;
+use App\Utils\Services\User\UserServices;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +18,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegisterController extends Controller
 {
     /**
+     * @var CopyFilesServicesGenericInterface
+     */
+    private $copyFilesServicesGeneric;
+
+    /**
      * @Route("/register", name="register")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function index(Request $request)
     {
@@ -26,20 +36,49 @@ class RegisterController extends Controller
 
         if ($registerForm->isSubmitted() && $registerForm->isValid()) {
             $user = $registerForm->getData();
-            $this->registerUser($user);
+            return $this->logicRenderToRegisterUser($user, $registerForm);
         }
 
-        return $this->render('register.html.twig', [
+        return $this->render(
+            'register.html.twig',
+            [
                 "form" => $registerForm->createView()
             ]
         );
     }
 
+
+    /**
+     * @param $user
+     * @param $registerForm
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    private function logicRenderToRegisterUser($user, $registerForm): \Symfony\Component\HttpFoundation\Response
+    {
+        try {
+            $this->registerUser($user);
+            $paramsRender = array("msg" => "registerSuccess");
+        } catch (\Exception $e) {
+            $paramsRender = array("error" => $e->getMessage(),
+                    "form" => $registerForm->createView()
+            );
+        }
+
+        return $this->render(
+            'register.html.twig',
+            $paramsRender
+        );
+    }
+
     /**
      * @param User $user
+     * @throws \App\Exception\CopyException
      * @throws \App\Exception\EntityNotValidException
+     * @throws \App\Exception\FileNotExistException
      * @throws \App\Exception\InfrastructureAdapterException
+     * @throws \App\Exception\InvalidMimeTypeException
      * @throws \App\Exception\ORMException
+     * @throws \App\Exception\PathNotExistException
      * @throws \App\Exception\UndefinedEntityException
      * @throws \App\Exception\UserEmailAlreadyUsedException
      * @throws \App\Exception\UserUserNameAlreadyUsedException
@@ -47,10 +86,16 @@ class RegisterController extends Controller
      */
     private function registerUser(User $user)
     {
+        $copyFilesServicesGeneric = new CopyFilesServicesGeneric();
+        $copyFilesServicesGeneric->setPathDestination(
+            $this->getParameter("path")["avatar"]
+        );
+
         $userServices = new UserServices(
             $this->getDoctrine()->getRepository(User::class),
             $this->getAccountValidationUserNotifications(),
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $copyFilesServicesGeneric
         );
 
         $userServices->register($user);
@@ -87,4 +132,5 @@ class RegisterController extends Controller
             $render
         );
     }
+
 }
