@@ -85,7 +85,6 @@ class UserServices
 
         $this->copyAvatarToLocalPath($user);
 
-
         $this->infrastructureEntityManager->persist($user);
         $this->infrastructureEntityManager->flush();
 
