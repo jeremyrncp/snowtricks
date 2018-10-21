@@ -6,7 +6,7 @@
  * Time: 11:51
  */
 
-namespace App\Tests\Utils\Services;
+namespace App\Tests\Utils\Services\User;
 
 use App\Exception\InvalidFieldException;
 use App\Exception\UserEmailAlreadyUsedException;
