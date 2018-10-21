@@ -4,6 +4,7 @@ composer.lock
 symfony.lock
 /.env
 /public/bundles/
+/public/img/avatar/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
