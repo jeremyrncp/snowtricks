@@ -27,16 +27,24 @@
                             Tricks
                         </a>
                     </li>
+                    {% if app.user.username is defined %}
                     <li class="nav-item">
-                        <a href="/register" class="nav-link">
+                        <a href="{{ url("logout") }}" class="nav-link">
+                            Sign out
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{{ url("register") }}" class="nav-link">
+                            Register
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url("login") }}" class="nav-link">
                             Sign in
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/login" class="nav-link">
-                            Login
-                        </a>
-                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
