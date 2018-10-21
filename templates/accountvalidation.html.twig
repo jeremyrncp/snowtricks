@@ -1,0 +1,25 @@
+{% extends "layout/base.html.twig" %}
+
+{% block body %}
+    <div class="row">
+        <div class="offset-md-4"></div>
+        <div class="col-md-4 col-12">
+            {% if error is defined %}
+                <div class="alert alert-danger">
+                    <p class="text-center">
+                        {{ error }}
+                    </p>
+                </div>
+            {% elseif msg is defined and msg == "accountValidationSuccess" %}
+                <div class="alert alert-success">
+                    <p class="text-center">
+                        Your SnowTracks account is validated ! you can now login.
+                    </p>
+                    <p>
+                        <a href="{{ url("login") }}">Login to the SnowTracks account</a>
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
