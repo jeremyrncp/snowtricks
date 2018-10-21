@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ subject }}</title>
+        <style type="text/css">
+            header {
+                background: #1b1e21;
+                height: 45px;
+                padding: 20px;
+            }
+            header span {
+                color: white;
+                font-size: 2em;
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+            section {
+                padding: 40px 20px;
+            }
+            footer {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <span>SnowTricks</span>
+        </header>
+        <section>
+            {% block body %}
+            {% endblock %}
+        </section>
+        <footer>
+            <p>
+                Copyright SnowTricks - all rights reserved
+            </p>
+        </footer>
+    </body>
+</html>

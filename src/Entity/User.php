@@ -3,12 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Asserts;
+use Rollerworks\Component\PasswordStrength\Validator\Constraints\PasswordRequirements;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User
 {
+    const USER_DISABLED = 2;
+    const USER_EMAIL_VALID = 1;
+    const USER_EMAIL_INVALID = 0;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -18,47 +24,118 @@ class User
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Asserts\NotBlank()
+     * @Asserts\Type(type="string")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Asserts\NotBlank()
+     * @Asserts\Type(type="string")
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="text")
+     * @Asserts\NotBlank()
+     * @Asserts\Type(type="string")
+     * @PasswordRequirements(
+     *  requireLetters=true,
+     *  requireNumbers=true,
+     *  requireSpecialCharacter=true,
+     *  minLength=8
+     *  )
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=200, unique=true)
+     * @Asserts\NotBlank()
+     * @Asserts\Type(type="string")
+     * @Asserts\Regex(
+     *     pattern="/^([A-Za-z]*)$/",
+     *     match=true,
+     *     message="Your username must contain letters but not contain digit or other caracter"
+     * )
      */
     private $userName;
 
     /**
-     * @ORM\Column(type="string", length=200)
+     * @ORM\Column(type="string", length=200, unique=true)
+     * @Asserts\NotBlank()
+     * @Asserts\Email()
      */
     private $email;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $state;
+    private $state = self::USER_EMAIL_INVALID;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Asserts\Type(type="string")
      */
     private $token;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Asserts\DateTime()
      */
     private $dateCreate;
+
+
+    /**
+     * @ORM\Column(type="blob")
+     * @Asserts\Image(
+     *     mimeTypes={"image/png", "image/jp2", "image/jpm", "image/jpx"},
+     *     maxHeight="500",
+     *     maxWidth="500"
+     * )
+     */
+    private $avatar;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateValidate;
 
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param $avatar
+     * @return User
+     */
+    public function setAvatar($avatar): self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
     }
 
     public function getFirstName(): ?string
