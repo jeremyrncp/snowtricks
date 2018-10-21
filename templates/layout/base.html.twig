@@ -29,6 +29,9 @@
                     </li>
                     {% if app.user.username is defined %}
                     <li class="nav-item">
+                        <a href="{{ url("register") }}" class="nav-link">
+                            Register
+                        </a>    
                         <a href="{{ url("logout") }}" class="nav-link">
                             Sign out
                         </a>
