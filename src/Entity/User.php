@@ -85,9 +85,8 @@ class User
      */
     private $dateCreate;
 
-
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="string")
      * @Asserts\Image(
      *     mimeTypes={"image/png", "image/jp2", "image/jpm", "image/jpx"},
      *     maxHeight="500",
