@@ -137,14 +137,11 @@ class Trick
 
     /**
      * @return Pictures|null
-     * @throws NotFoundPictureException
      */
     public function getPicturePresentation(): ?Pictures
     {
         if (count($this->Pictures) === 0) {
-            throw new NotFoundPictureException(
-                sprintf('This trick have zero picture !')
-            );
+            return null;
         }
 
         return current($this->Pictures->toArray());

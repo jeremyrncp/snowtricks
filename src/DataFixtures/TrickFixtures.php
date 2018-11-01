@@ -7,7 +7,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\Trick;
-use App\Entity\User;
 use App\Utils\Generic\SlugServices;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -21,7 +20,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i <= 10; $i ++) {
+        for ($i = 0; $i < 10; $i ++) {
             $trick = $this->getTrick();
             $trick->setUser($this->getReference(UserFixtures::USER_ADMIN_REFERENCES));
             $trick->setSlug($trick->getSlug() . "-" . $i);

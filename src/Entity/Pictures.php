@@ -39,7 +39,7 @@ class Pictures
     /**
      * @var Trick
      * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="Pictures")
-     * @ORM\JoinColumn(nullable=false, referencedColumnName="id")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
      */
     private $Trick;
 
