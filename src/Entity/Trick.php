@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Exception\NotFoundPicturesException;
+use App\Exception\NotFoundPictureException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -137,12 +137,12 @@ class Trick
 
     /**
      * @return Pictures|null
-     * @throws NotFoundPicturesException
+     * @throws NotFoundPictureException
      */
     public function getPicturePresentation(): ?Pictures
     {
         if (count($this->Pictures) === 0) {
-            throw new NotFoundPicturesException(
+            throw new NotFoundPictureException(
                 sprintf('This trick have zero picture !')
             );
         }
