@@ -1,0 +1,24 @@
+{% if trickCollection is defined %}
+    {% for key,trick in trickCollection %}
+        {% if key % 5 == 0 %}
+        <div class="offset-lg-1 col-lg-2 col-sm-4 col-12 elmt-trick">
+        {% else %}
+        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
+        {% endif %}
+            {% if trick.getPicturePresentation() is not null %}
+            <header style="background-image:url(' {{ trick.getPicturePresentation().getPictureRelativePath() }} ');"></header>
+            {% else %}
+             <header style="background-image:url('img/tricks/default.png');"></header>
+            {% endif %}
+            <a href="{{ path('index') }}/{{ trick.slug }}">
+                {{ trick.name }}
+            </a>
+        </div>
+    {% endfor %}
+{% endif %}
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" id="moreTricks" data-length="{{ length }}">
+                <i class="fas fa-plus fa-2x"></i>
+                More tricks
+            </button>
+        </div>
