@@ -8,6 +8,7 @@ module.exports = (function() {
 
     btnMoreTricks.addEventListener('click', function (event) {
         const length = 10 + Number(btnMoreTricks.getAttribute('data-length'));
+                        btnMoreTricks.setAttribute('data-length', String(length));
         $.ajax({
             'data': {
                 'end':  length

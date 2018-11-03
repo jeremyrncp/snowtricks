@@ -8,7 +8,7 @@
             {% if trick.getPicturePresentation() is not null %}
             <header style="background-image:url(' {{ trick.getPicturePresentation().getPictureRelativePath() }} ');"></header>
             {% else %}
-             <header style="background-image:url('img/tricks/default.png');"></header>
+             <header style="background-image:url({{ asset('img/tricks/default.png') }});"></header>
             {% endif %}
             <a href="{{ path('index') }}/{{ trick.slug }}">
                 {{ trick.name }}
@@ -16,9 +16,3 @@
         </div>
     {% endfor %}
 {% endif %}
-        <div class="col-12 text-center">
-            <button class="btn btn-primary" id="moreTricks" data-length="{{ length }}">
-                <i class="fas fa-plus fa-2x"></i>
-                More tricks
-            </button>
-        </div>

@@ -23,8 +23,7 @@ class ApiTricksController extends ApiController
         }
 
         return $this->buildResponseForRessources([
-            'trickCollection' => $trickCollection,
-            'length' => $length
+            'trickCollection' => $trickCollection
         ], 'elmt/tricks-list.html.twig');
     }
 }

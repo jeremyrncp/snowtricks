@@ -14,6 +14,14 @@
     <div class="row" id="listTricks">
         {% include 'elmt/tricks-list.html.twig' %}
     </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" id="moreTricks" data-length="{{ length }}">
+                <i class="fas fa-plus fa-2x"></i>
+                More tricks
+            </button>
+        </div>
+    </div>
     <a class="elmt-goto" href="#tricks">
         <i class="fas fa-chevron-circle-up fa-3x"></i>
     </a>
