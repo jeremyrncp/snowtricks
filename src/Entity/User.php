@@ -17,6 +17,7 @@ class User implements UserInterface
     const USER_EMAIL_INVALID = 0;
 
     /**
+     * @var int
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -24,6 +25,7 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      * @Asserts\NotBlank()
      * @Asserts\Type(type="string")
@@ -31,6 +33,7 @@ class User implements UserInterface
     private $firstName;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=100)
      * @Asserts\NotBlank()
      * @Asserts\Type(type="string")
@@ -38,6 +41,7 @@ class User implements UserInterface
     private $lastName;
 
     /**
+     * @var string
      * @ORM\Column(type="text")
      * @Asserts\NotBlank()
      * @Asserts\Type(type="string")
@@ -51,6 +55,7 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=200, unique=true)
      * @Asserts\NotBlank()
      * @Asserts\Type(type="string")
@@ -63,6 +68,7 @@ class User implements UserInterface
     private $userName;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=200, unique=true)
      * @Asserts\NotBlank()
      * @Asserts\Email()
@@ -70,23 +76,27 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @var int
      * @ORM\Column(type="integer")
      */
     private $state = self::USER_EMAIL_INVALID;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=40)
      * @Asserts\Type(type="string")
      */
     private $token;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="datetime")
      * @Asserts\DateTime()
      */
     private $dateCreate;
 
     /**
+     * @var string
      * @ORM\Column(type="string")
      * @Asserts\Image(
      *     mimeTypes={"image/png", "image/jp2", "image/jpm", "image/jpx"},
@@ -97,6 +107,7 @@ class User implements UserInterface
     private $avatar;
 
     /**
+     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateValidate;
@@ -125,6 +136,11 @@ class User implements UserInterface
         return $this->id;
     }
 
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
 
     public function getPassword(): ?string
     {
@@ -250,5 +266,13 @@ class User implements UserInterface
     public function getSalt()
     {
         return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function __toString(): string
+    {
+        return $this->userName;
     }
 }

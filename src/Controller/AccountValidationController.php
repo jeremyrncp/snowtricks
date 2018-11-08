@@ -32,12 +32,12 @@ class AccountValidationController extends AbstractController
     }
 
     /**
-     * @param $token
+     * @param string $token
      * @throws TokenAlreadyUsedException
      * @throws \App\Exception\InfrastructureAdapterException
      * @throws \App\Exception\UnknownParameterException
      */
-    private function validateAccountWithToken($token): void
+    private function validateAccountWithToken(string $token): void
     {
         $entityManagerFactory = new EntityManagerFactory($this->getDoctrine()->getManager());
         $entityManager = $entityManagerFactory->create();

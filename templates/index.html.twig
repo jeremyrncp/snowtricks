@@ -11,96 +11,16 @@
 
 {% block body %}
 <div class="content" id="tricks">
+        {% include 'elmt/partial/spinner-elmt.html.twig' %}
+    <div class="row" id="listTricks">
+        {% include 'elmt/tricks-list.html.twig' %}
+    </div>
     <div class="row">
-        <div class="offset-lg-1 col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="offset-lg-1 col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="offset-lg-1 col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
-        </div>
-        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
-            <header style="background-image:url('img/tricks/example.jpg');"></header>
-            <a href="#trick-window" data-toggle="modal">
-                Trick name
-            </a>
+        <div class="col-12 text-center">
+            <button class="btn btn-primary" id="moreTricks" data-length="{{ length }}">
+                <i class="fas fa-plus fa-2x"></i>
+                More tricks
+            </button>
         </div>
     </div>
     <a class="elmt-goto" href="#tricks">
@@ -108,4 +28,5 @@
     </a>
 </div>
     {% include "modal/trick-window.html.twig" %}
+    <script src="{{ asset('build/index.js') }}" type="text/javascript"></script>
 {% endblock %}
