@@ -1,12 +1,13 @@
 body > header {
   background: url('img/background/snowboarder.jpg') no-repeat;
   background-position: center;
-  background-size: auto;
+  background-size: cover;
   min-height: 92vh;
   position: relative;
   width: 100%;
 
   h1 {
+    color: white;
     height: 30px;
     position: absolute;
     text-align: center;
