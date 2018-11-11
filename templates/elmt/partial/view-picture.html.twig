@@ -1,5 +1,5 @@
-<a href="" style="background-image: url('{{ picture.pictureRelativePath }}')">
+<a href="{{ picture.pictureRelativePath }}" style="background-image: url('{{ picture.pictureRelativePath }}')" data-lightbox="picture-{{ picture.id }}" data-title="{{ picture.dateCreate|date('Y-m-d H:i') }}">
     <span class="default-overlay">
-        <i class="fa fa-search-plus fa-3x"></i>
+        <i class="fa fa-search-plus"></i>
     </span>
 </a>
