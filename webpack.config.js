@@ -19,7 +19,6 @@ Encore
      */
     .addEntry('app', './assets/js/app.js')
     .addEntry('index', './assets/js/index.ts')
-    //.addEntry('page2', './assets/js/page2.js')
 
     /*
      * FEATURE CONFIG

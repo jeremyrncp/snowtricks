@@ -10,7 +10,7 @@
             {% else %}
              <header style="background-image:url({{ asset('img/tricks/default.png') }});"></header>
             {% endif %}
-            <a href="{{ path('index') }}/{{ trick.slug }}">
+            <a href="{{ path('view_trick', {'slug': trick.slug}) }}">
                 {{ trick.name }}
             </a>
         </div>
