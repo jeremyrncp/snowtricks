@@ -44,6 +44,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         $trick->setSlug(SlugServices::slugify("Mute"));
         $trick->setTrickGroup($this->getReference(TrickGroupFixtures::TRICK_GROUP_REFERENCE_ONE_FOOT_TRICKS));
         $trick->setDescription("Description de test");
+        $trick->setDateCreate();
         return $trick;
     }
 
