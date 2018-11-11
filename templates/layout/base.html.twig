@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="{{ asset('build/app.css') }}" />
         <base href="/" />
         {% block stylesheets %}{% endblock %}
+        <script type="text/javascript" src="{{ asset('build/app.js') }}"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -63,7 +64,6 @@
             </p>
         </footer>
         {% include "layout/elmt/navbar-footer.html.twig" %}
-        <script type="text/javascript" src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
