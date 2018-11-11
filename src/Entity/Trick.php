@@ -37,6 +37,19 @@ class Trick
      */
     private $description;
 
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $dateCreate;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateUpdate;
+
     /**
      * @var TrickGroup
      * @ORM\ManyToOne(targetEntity="App\Entity\TrickGroup")
@@ -52,14 +65,21 @@ class Trick
     private $User;
 
     /**
-     * @var Pictures
-     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="Trick")
+     * @var Pictures[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="Trick", cascade={"remove"})
      */
     private $Pictures;
+
+    /**
+     * @var Movies[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Movies", mappedBy="Trick", cascade={"remove"})
+     */
+    private $Movies;
 
     public function __construct()
     {
         $this->Pictures = new ArrayCollection();
+        $this->Movies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,7 +148,7 @@ class Trick
     }
 
     /**
-     * @return Pictures
+     * @return Pictures[]|null
      */
     public function getPictures()
     {
@@ -145,5 +165,39 @@ class Trick
         }
 
         return current($this->Pictures->toArray());
+    }
+
+    /**
+     * @return Movies[]
+     */
+    public function getMovies()
+    {
+        return $this->Movies;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateCreate(): \DateTime
+    {
+        return $this->dateCreate;
+    }
+
+    public function setDateCreate(): void
+    {
+        $this->dateCreate = new \DateTime();
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateUpdate(): ?\DateTime
+    {
+        return $this->dateUpdate;
+    }
+
+    public function setDateUpdate(): void
+    {
+        $this->dateUpdate = new \DateTime();
     }
 }

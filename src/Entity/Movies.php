@@ -19,9 +19,9 @@ class Movies
 
     /**
      * @var string
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
-    private $embedCode;
+    private $urlMovie;
 
     /**
      * @var \DateTime
@@ -37,7 +37,7 @@ class Movies
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Trick")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="id")
      */
     private $Trick;
 
@@ -46,17 +46,22 @@ class Movies
         return $this->id;
     }
 
-    public function getEmbedCode(): ?string
+    /**
+     * @return string
+     */
+    public function getUrlMovie(): string
     {
-        return $this->embedCode;
+        return $this->urlMovie;
     }
 
-    public function setEmbedCode(string $embedCode): self
+    /**
+     * @param string $urlMovie
+     */
+    public function setUrlMovie(string $urlMovie): void
     {
-        $this->embedCode = $embedCode;
-
-        return $this;
+        $this->urlMovie = $urlMovie;
     }
+
 
     public function getDateCreate(): ?\DateTimeInterface
     {
