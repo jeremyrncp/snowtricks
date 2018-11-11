@@ -8,14 +8,14 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181018121026 extends AbstractMigration
+final class Version20181111103053 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user ADD avatar LONGBLOB NOT NULL');
+        $this->addSql('ALTER TABLE trick ADD date_create DATE NOT NULL, ADD date_update DATE DEFAULT NULL');
     }
 
     public function down(Schema $schema) : void
@@ -23,6 +23,6 @@ final class Version20181018121026 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE user DROP avatar');
+        $this->addSql('ALTER TABLE trick DROP date_create, DROP date_update');
     }
 }
