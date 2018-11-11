@@ -18,3 +18,8 @@ button i {
 .display {
   display: block !important;
 }
+
+/** plugin **/
+html.with-featherlight {
+  overflow: inherit !important;
+}
