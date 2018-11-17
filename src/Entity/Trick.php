@@ -66,13 +66,13 @@ class Trick
 
     /**
      * @var Pictures[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="Trick", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="Trick", cascade={"persist", "remove"})
      */
     private $Pictures;
 
     /**
      * @var Movies[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Movies", mappedBy="Trick", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Movies", mappedBy="Trick", cascade={"persist", "remove"})
      */
     private $Movies;
 
@@ -155,6 +155,19 @@ class Trick
         return $this->Pictures;
     }
 
+    public function addPicture(Pictures $picture)
+    {
+        $picture->setTrick($this);
+        $picture->setDateCreate();
+        $picture->setUser($this->getUser());
+        $this->Pictures->add($picture);
+    }
+
+    public function removePicture($picture)
+    {
+        $this->Pictures->remove($picture);
+    }
+
     /**
      * @return Pictures|null
      */
@@ -173,6 +186,19 @@ class Trick
     public function getMovies()
     {
         return $this->Movies;
+    }
+
+    public function addMovie(Movies $movie)
+    {
+        $movie->setTrick($this);
+        $movie->setDateCreate();
+        $movie->setUser($this->getUser());
+        $this->Movies->add($movie);
+    }
+
+    public function removeMovie($movie)
+    {
+        $this->Movies->remove($movie);
     }
 
     /**
@@ -199,5 +225,10 @@ class Trick
     public function setDateUpdate(): void
     {
         $this->dateUpdate = new \DateTime();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

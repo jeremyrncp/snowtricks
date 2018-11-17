@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Validator as AppAsserts;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MoviesRepository")
@@ -19,13 +20,14 @@ class Movies
 
     /**
      * @var string
+     * @AppAsserts\YoutubeMovie()
      * @ORM\Column(type="string", length=255)
      */
     private $urlMovie;
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $dateCreate;
 
@@ -49,7 +51,7 @@ class Movies
     /**
      * @return string
      */
-    public function getUrlMovie(): string
+    public function getUrlMovie(): ?string
     {
         return $this->urlMovie;
     }
@@ -68,9 +70,9 @@ class Movies
         return $this->dateCreate;
     }
 
-    public function setDateCreate(\DateTimeInterface $dateCreate): self
+    public function setDateCreate(): self
     {
-        $this->dateCreate = $dateCreate;
+        $this->dateCreate = new \DateTime();
 
         return $this;
     }

@@ -7,6 +7,8 @@ parameters:
     locale: 'en'
     path:
         avatar: '%kernel.project_dir%\public\img\avatar\'
+    path.trick: '%kernel.project_dir%\public\img\tricks\'
+    path.relativetopublic: 'img/tricks/'
 
 services:
     # default configuration for services in *this* file
@@ -32,5 +34,15 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Utils\Generic\Files\CopyFilesServicesGeneric:
+        public: true
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\EventListener\PictureAddListenerSubscriber:
+        arguments:
+            - '@App\Utils\Generic\Files\CopyFilesServicesGeneric'
+            - '%path.trick%'
+            - '%path.relativetopublic%'
+        tags:
+        - { name: doctrine.event_subscriber, connection: default }

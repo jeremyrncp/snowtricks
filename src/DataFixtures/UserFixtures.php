@@ -7,12 +7,14 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Utils\Generic\EncryptionServicesGeneric;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class UserFixtures extends Fixture
 {
-    const USER_ADMIN_REFERENCES = "user-admin";
+    const USER_ADMIN_REFERENCES = 'user-admin';
+    const USER_ADMIN_DEFAULT_PASSWORD = 'admin';
 
     /**
      * @param ObjectManager $manager
@@ -41,7 +43,7 @@ class UserFixtures extends Fixture
         $user->setUserName("Administrator");
         $user->setAvatar(__DIR__ . "..\..\..\public\img\avatar\dc74d0a93e8fc22cc28aed29c3a1057b.png");
         $user->setState(User::USER_EMAIL_VALID);
-        $user->setPassword('$2y$10$LwjExTOUm1twstb/H.XRiuhvX8k/hJgtlxUVj1J2Tbad9KtqL/kAS');
+        $user->setPassword(EncryptionServicesGeneric::passwordEncrypt(self::USER_ADMIN_DEFAULT_PASSWORD));
         $user->setToken('de932bb7f33882a66ba8e81952c16b6b1ec40095');
         return $user;
     }
