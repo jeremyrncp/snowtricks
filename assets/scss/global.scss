@@ -23,3 +23,11 @@ button i {
 html.with-featherlight {
   overflow: inherit !important;
 }
+
+.collection-trick {
+  height: inherit !important;
+
+  .btn-primary {
+    margin-right: 5px;
+  }
+}
