@@ -17,8 +17,9 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.scss) if you JavaScript imports CSS.
      */
-    .addEntry('app', './assets/js/app.js')
+    .createSharedEntry('app', './assets/js/app.js')
     .addEntry('index', './assets/js/index.ts')
+
 
     /*
      * FEATURE CONFIG
