@@ -20,6 +20,7 @@
         "build": "encore production"
     },
     "dependencies": {
-        "lightbox": "^0.5.0"
+        "lightbox": "^0.5.0",
+        "symfony-collection": "^2.1.30"
     }
 }
