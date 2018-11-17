@@ -1,0 +1,14 @@
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        {% if label == constant('App\\Controller\\AppController::FLASH_SUCCESS') %}
+            {% set class = 'alert-success' %}
+        {% elseif label == constant('App\\Controller\\AppController::FLASH_ERROR') %}
+            {% set class = 'alert-danger' %}
+        {% else %}
+            {% set class = 'alert-warning' %}
+        {% endif %}
+        <div class="alert {{ class }} text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
