@@ -25,7 +25,7 @@ class Pictures
 
     /**
      * @var \DateTime
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $dateCreate;
 
@@ -65,9 +65,9 @@ class Pictures
         return $this->dateCreate;
     }
 
-    public function setDateCreate(\DateTimeInterface $dateCreate): self
+    public function setDateCreate(): self
     {
-        $this->dateCreate = $dateCreate;
+        $this->dateCreate = new \DateTime();
 
         return $this;
     }
