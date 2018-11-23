@@ -11,7 +11,7 @@ class YoutubeMovieValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
 
-        preg_match('/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/gm', $value, $matchUrl);
+        preg_match('/^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/m', $value, $matchUrl);
 
         if (count($matchUrl) === 0) {
             $this->addViolation($value, $constraint);
