@@ -1,7 +1,10 @@
 <iframe
-        class="img-fluid"
+        class="related-media"
         src="{{ movie.urlMovie }}"
         frameborder="0"
         allow="autoplay; encrypted-media"
         allowfullscreen>
 </iframe>
+{% if app.user is defined %}
+    <a href="{{ path('edit_movies', {'id': movie.id}) }}"><i class="fa fa-edit"></i></a>
+{% endif %}

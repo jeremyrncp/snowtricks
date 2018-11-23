@@ -2,9 +2,9 @@
 {% block header %}
 {% endblock %}
 
-{% set btnSubmitValue = 'Add trick' %}
+{% set btnSubmitValue = 'Update the trick' %}
 {% block body %}
-    {% include "elmt/trick-form.html.twig" with {'btnSubmit': btnSubmitValue, 'title': 'Add a trick'} %}
+    {% include "elmt/trick-form.html.twig" with {'btnSubmit': btnSubmitValue, 'title': 'Edit the trick'} %}
 {% endblock %}
 {% block javascripts %}
     {% include "elmt/trick-form-javascript.html.twig" %}

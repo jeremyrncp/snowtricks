@@ -39,6 +39,11 @@
             <b>Date de modification</b> : {{ trick.dateUpdate|date(dateFormat) }}
             {% endif %}
         </p>
+        <p>
+            {% if app.user is defined %}
+                <a href="{{ path('edit_trick', {'slug': trick.slug}) }}" class="btn btn-success"><i class="fa fa-edit"></i> Edit trick</a>
+            {% endif %}
+        </p>
     </section>
     <!--
     <section class="comments">

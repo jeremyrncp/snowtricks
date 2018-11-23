@@ -10,9 +10,14 @@
             {% else %}
              <header style="background-image:url({{ asset('img/tricks/default.png') }});"></header>
             {% endif %}
-            <a href="{{ path('view_trick', {'slug': trick.slug}) }}">
-                {{ trick.name }}
-            </a>
+            <div>
+                <a href="{{ path('view_trick', {'slug': trick.slug}) }}">
+                    {{ trick.name }}
+                </a>
+                {% if app.user is defined %}
+                    <a href="{{ path('edit_trick', {'slug': trick.slug}) }}"><i class="fa fa-edit"></i></a>
+                {% endif %}
+            </div>
         </div>
     {% endfor %}
 {% endif %}
