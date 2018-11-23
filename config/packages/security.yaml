@@ -32,3 +32,4 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/trick/add, roles: ROLE_USER }
+        - { path: ^/trick/.*/edit, roles: ROLE_USER }

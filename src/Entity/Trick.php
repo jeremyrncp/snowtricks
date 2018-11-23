@@ -148,7 +148,7 @@ class Trick
     }
 
     /**
-     * @return Pictures[]|null
+     * @return ArrayCollection
      */
     public function getPictures()
     {
@@ -165,7 +165,7 @@ class Trick
 
     public function removePicture($picture)
     {
-        $this->Pictures->remove($picture);
+        $this->Pictures->removeElement($picture);
     }
 
     /**
@@ -181,7 +181,7 @@ class Trick
     }
 
     /**
-     * @return Movies[]
+     * @return ArrayCollection
      */
     public function getMovies()
     {
@@ -198,7 +198,7 @@ class Trick
 
     public function removeMovie($movie)
     {
-        $this->Movies->remove($movie);
+        $this->Movies->removeElement($movie);
     }
 
     /**

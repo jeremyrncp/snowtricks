@@ -1,0 +1,15 @@
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h3 mb-3 font-weight-normal">{{ title }}</h1>
+            {% form_theme form with ['bootstrap_4_layout.html.twig', 'elmt/jquery.collection.html.twig'] %}
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_widget(form) }}
+            <div class="form-group">
+                <input type="submit" class="btn btn-block btn-success" value="{{ btnSubmitValue }}" />
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>

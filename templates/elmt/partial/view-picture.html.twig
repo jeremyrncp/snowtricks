@@ -1,5 +1,8 @@
-<a href="{{ picture.pictureRelativePath }}" style="background-image: url('{{ picture.pictureRelativePath }}')" data-featherlight>
+<a class="related-media" href="{{ picture.pictureRelativePath }}" style="background-image: url('{{ picture.pictureRelativePath }}')" data-featherlight>
     <span class="default-overlay">
         <i class="fa fa-search-plus"></i>
     </span>
 </a>
+{% if app.user is defined %}
+    <a href="{{ path('edit_pictures', {'id': picture.id}) }}"><i class="fa fa-edit"></i></a>
+{% endif %}

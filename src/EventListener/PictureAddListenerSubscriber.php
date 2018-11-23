@@ -10,8 +10,8 @@ use App\Entity\Pictures;
 use App\Utils\Generic\Files\CopyFilesServicesGenericInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
-use Symfony\Component\Finder\Finder;
 
 class PictureAddListenerSubscriber implements EventSubscriber
 {
@@ -36,7 +36,13 @@ class PictureAddListenerSubscriber implements EventSubscriber
     {
         return array(
             Events::prePersist,
+            Events::preUpdate
         );
+    }
+
+    public function preUpdate(PreUpdateEventArgs $args)
+    {
+        $this->index($args);
     }
 
     public function prePersist(LifecycleEventArgs $args)

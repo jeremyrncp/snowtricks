@@ -36,5 +36,4 @@ class AddTrickController extends AppController
             'errors' => $trickForm->getData()
         ]);
     }
-
 }
