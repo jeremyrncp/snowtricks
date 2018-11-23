@@ -18,7 +18,7 @@ class Pictures
     private $id;
 
     /**
-     * @var string
+     * @var mixed
      * @ORM\Column(type="string", length=255)
      */
     private $pictureRelativePath;
@@ -48,12 +48,12 @@ class Pictures
         return $this->id;
     }
 
-    public function getPictureRelativePath(): ?string
+    public function getPictureRelativePath()
     {
         return $this->pictureRelativePath;
     }
 
-    public function setPictureRelativePath(string $pictureRelativePath): self
+    public function setPictureRelativePath($pictureRelativePath): self
     {
         $this->pictureRelativePath = $pictureRelativePath;
 
