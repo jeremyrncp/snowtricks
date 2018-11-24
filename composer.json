@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "cocur/slugify": "^3.1",
+        "knplabs/knp-paginator-bundle": "^2.8",
         "ninsuo/symfony-collection": "^2.1",
         "ralouphie/mimey": "^2.0",
         "respect/validation": "^1.1",
