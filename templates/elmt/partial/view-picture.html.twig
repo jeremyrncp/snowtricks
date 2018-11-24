@@ -3,6 +3,6 @@
         <i class="fa fa-search-plus"></i>
     </span>
 </a>
-{% if app.user is defined %}
+{% if app.user is defined and app.user == trick.user %}
     <a href="{{ path('edit_pictures', {'id': picture.id}) }}"><i class="fa fa-edit"></i></a>
 {% endif %}
