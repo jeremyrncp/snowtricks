@@ -16,6 +16,7 @@
                 </a>
                 {% if app.user is defined %}
                     <a href="{{ path('edit_trick', {'slug': trick.slug}) }}"><i class="fa fa-edit"></i></a>
+                    <a data-path="{{ path('delete_trick', {'slug': trick.slug}) }}" class="delete-with-confirmation" href="#tricks"><i class="fa fa-trash"></i></a>
                 {% endif %}
             </div>
         </div>
