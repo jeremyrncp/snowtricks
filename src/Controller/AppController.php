@@ -6,12 +6,12 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use App\Entity\User;
 
 
-class AppController extends AbstractController
+class AppController extends Controller
 {
     public const FLASH_SUCCESS = 'flash_success';
     public const FLASH_ERROR = 'flash_error';
