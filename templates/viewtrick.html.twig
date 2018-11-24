@@ -55,79 +55,26 @@
             <input type="submit" class="btn btn-block btn-success" value="Add comment" />
         </div>
         {{ form_end(formComment) }}
-        <!--
-        <div class="elmt-comments">
-            <span>
-                <img src="img/avatar/example.jpg" alt="Avatar" />
-            </span>
-            <span>
-                <p>
-                    Sed commodo tincidunt nisl at volutpat. Sed maximus lacus vel libero eleifend, ac fermentum urna finibus. Curabitur consequat velit odio, nec bibendum quam malesuada in. Pellentesque non porttitor justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum at maximus quam. Mauris pharetra dui orci, vitae sagittis magna accumsan in. Praesent laoreet porta interdum.
-                </p>
-            </span>
-            <footer>
-                <p>Ajouté le 11/10/2018 à 13h35 par <b>Durand Martin</b></p>
-            </footer>
-        </div>
-        <div class="elmt-comments">
-            <span>
-                <img src="img/avatar/example.jpg" alt="Avatar" />
-            </span>
-            <span>
-                <p>
-                    Sed commodo tincidunt nisl at volutpat. Sed maximus lacus vel libero eleifend, ac fermentum urna finibus. Curabitur consequat velit odio, nec bibendum quam malesuada in. Pellentesque non porttitor justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum at maximus quam. Mauris pharetra dui orci, vitae sagittis magna accumsan in. Praesent laoreet porta interdum.
-                </p>
-            </span>
-            <footer>
-                <p>Ajouté le 11/10/2018 à 13h35  par <b>Durand Martin</b></p>
-            </footer>
-        </div>
-        <div class="elmt-comments">
-            <span>
-                <img src="img/avatar/example.jpg" alt="Avatar" />
-            </span>
-            <span>
-                <p>
-                    Sed commodo tincidunt nisl at volutpat. Sed maximus lacus vel libero eleifend, ac fermentum urna finibus. Curabitur consequat velit odio, nec bibendum quam malesuada in. Pellentesque non porttitor justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum at maximus quam. Mauris pharetra dui orci, vitae sagittis magna accumsan in. Praesent laoreet porta interdum.
-                </p>
-            </span>
-            <footer>
-                <p>Ajouté le 11/10/2018 à 13h35  par <b>Durand Martin</b></p>
-            </footer>
-        </div>
-        <div class="elmt-comments">
-            <span>
-                <img src="img/avatar/example.jpg" alt="Avatar" />
-            </span>
-            <span>
-                <p>
-                    Sed commodo tincidunt nisl at volutpat. Sed maximus lacus vel libero eleifend, ac fermentum urna finibus. Curabitur consequat velit odio, nec bibendum quam malesuada in. Pellentesque non porttitor justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum at maximus quam. Mauris pharetra dui orci, vitae sagittis magna accumsan in. Praesent laoreet porta interdum.
-                </p>
-            </span>
-            <footer>
-                <p>Ajouté le 11/10/2018 à 13h35  par <b>Durand Martin</b></p>
-            </footer>
-        </div>
-        <div class="elmt-comments">
-            <span>
-                <img src="img/avatar/example.jpg" alt="Avatar" />
-            </span>
-            <span>
-                <p>
-                    Sed commodo tincidunt nisl at volutpat. Sed maximus lacus vel libero eleifend, ac fermentum urna finibus. Curabitur consequat velit odio, nec bibendum quam malesuada in. Pellentesque non porttitor justo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vestibulum at maximus quam. Mauris pharetra dui orci, vitae sagittis magna accumsan in. Praesent laoreet porta interdum.
-                </p>
-            </span>
-            <footer>
-                <p>Ajouté le 11/10/2018 à 13h35 par <b>Durand Martin</b></p>
-            </footer>
-        </div>
 
         <div class="text-center">
-            <button class="btn btn-primary">
-                Load more ...
-            </button>
+            <b>{{ comments.getTotalItemCount }} comments</b>
+            {{ knp_pagination_render(comments, 'elmt/partial/pagination.html.twig') }}
         </div>
-        -->
+        {% for comment in comments %}
+        <div class="elmt-comments">
+            <span>
+                <img src="{{ asset(comment.user.getAvatar()) }}" alt="Avatar" /><br />
+            </span>
+            <span>
+                <p>
+                    {{ comment.content }}
+                </p>
+            </span>
+            <footer>
+                <p>Added the {{ comment.datecreate|date('Y-m-d H:i:s') }} by <b>{{ comment.user.firstname }} {{ comment.user.lastname }}</b></p>
+            </footer>
+        </div>
+        {% endfor %}
     </section>
     {% endif %}
 </div>
