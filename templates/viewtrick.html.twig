@@ -40,24 +40,22 @@
             {% endif %}
         </p>
         <p>
-            {% if app.user is defined %}
+            {% if app.user is defined and app.user == trick.user %}
                 <a href="{{ path('edit_trick', {'slug': trick.slug}) }}" class="btn btn-success"><i class="fa fa-edit"></i> Edit trick</a>
             {% endif %}
         </p>
     </section>
-    <!--
+    {% if formComment is defined %}
     <section class="comments">
-        <form class="form">
-            <div class="row">
-                <div class="col-4 offset-sm-2">
-                    <input type="text" class="form-control" title="Comment" name="comment" />
-                </div>
-                <div class="col-4">
-                    <button class="btn btn-light btn-block" type="submit">Leave a comment</button>
-                </div>
-            </div>
-        </form>
-
+        {% form_theme formComment with 'bootstrap_4_layout.html.twig' %}
+        {{ form_start(formComment) }}
+        {{ form_errors(formComment) }}
+        {{ form_widget(formComment) }}
+        <div class="form-group">
+            <input type="submit" class="btn btn-block btn-success" value="Add comment" />
+        </div>
+        {{ form_end(formComment) }}
+        <!--
         <div class="elmt-comments">
             <span>
                 <img src="img/avatar/example.jpg" alt="Avatar" />
@@ -129,8 +127,9 @@
                 Load more ...
             </button>
         </div>
+        -->
     </section>
-    -->
+    {% endif %}
 </div>
 {% endblock %}
 {% block javascripts %}
