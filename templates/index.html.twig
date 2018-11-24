@@ -2,7 +2,7 @@
 
 {% block header %}
     <header>
-        <h1>Phrase d'accroche</h1>
+        <h1>Welcome to the snow tricks ! The snowboarding tricks reference</h1>
         <a class="elmt-goto" href="/#tricks">
             <i class="fas fa-chevron-circle-down fa-3x text-white"></i>
         </a>
@@ -17,10 +17,16 @@
     </div>
     <div class="row">
         <div class="col-12 text-center">
-            <button class="btn btn-primary" id="moreTricks" data-length="{{ length }}">
-                <i class="fas fa-plus fa-2x"></i>
-                More tricks
+            <button class="btn btn-light" id="moreTricks" data-length="{{ length }}">
+                <i class="fas fa-search"></i>
+                View more tricks
             </button>
+            {% if app.user is defined %}
+            <a class="btn btn-primary" href="{{ path('add_trick') }}">
+                <i class="fas fa-plus"></i>
+                Add new trick
+            </a>
+            {% endif %}
         </div>
     </div>
     <a class="elmt-goto" href="#tricks">
