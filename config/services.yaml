@@ -47,3 +47,5 @@ services:
             - '%path.relativetopublic%'
         tags:
         - { name: doctrine.event_subscriber, connection: default }
+
+    App\Repository\CommentsRepository:
