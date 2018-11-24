@@ -62,10 +62,17 @@ class ViewTrickController extends AppController
         $commentsRepository = $this->getDoctrine()->getRepository(Comments::class);
 
         $paginator  = $this->get('knp_paginator');
-        return $paginator->paginate(
+        $pagination = $paginator->paginate(
             $commentsRepository->findCommentsByTrick($trick),
             $request->query->getInt('page', 1),
             self::COMMENTS_BY_PAGE
         );
+        $pagination->setCustomParameters(array(
+            'align' => 'center',
+            'size' => 'small',
+            'style' => 'bottom',
+        ));
+
+        return $pagination;
     }
 }
