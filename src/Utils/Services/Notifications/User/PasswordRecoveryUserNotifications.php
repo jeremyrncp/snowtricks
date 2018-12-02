@@ -6,21 +6,27 @@
 
 namespace App\Utils\Services\Notifications\User;
 
+use App\Entity\PasswordRecovery;
 use App\Exception\UndefinedEntityException;
 use App\Infrastructure\InfrastructureMailerInterface;
 use App\Infrastructure\InfrastructureRenderInterface;
 use App\Infrastructure\InfrastructureValidatorInterface;
 use App\Infrastructure\Mailer\Mailer;
 
-class AccountValidationUserNotifications extends UserNotifications implements UserNotificationsInterface
+class PasswordRecoveryUserNotifications extends UserNotifications implements PasswordRecoveryNotificationsInterface
 {
 
-    const SUBJECT_EMAIL = "Account validation";
+    const SUBJECT_EMAIL = "Password recovery";
 
     /**
      * @var InfrastructureMailerInterface
      */
     private $mailer;
+
+    /**
+     * @var PasswordRecovery
+     */
+    private $passwordRecovery;
 
     /**
      * AccountValidationUserNotifications constructor.
@@ -49,13 +55,21 @@ class AccountValidationUserNotifications extends UserNotifications implements Us
         $this->mailer->setSender(Mailer::DEFAULT_REPLYTO_EMAIL);
         $this->mailer->setContent(
             $this->getTemplate(
-                "notifications/account-validation.html.twig",
+                "notifications/password-recovery.html.twig",
                 [
-                    "token" => $this->user->getToken(),
-                    "subject" => self::SUBJECT_EMAIL
+                    "passwordRecovery" => $this->passwordRecovery,
+                    "subject" => "Password recovery"
                 ]
             )
         );
         $this->mailer->send();
+    }
+
+    /**
+     * @param PasswordRecovery $passwordRecovery
+     */
+    public function setPasswordRecovery(PasswordRecovery $passwordRecovery)
+    {
+        $this->passwordRecovery = $passwordRecovery;
     }
 }

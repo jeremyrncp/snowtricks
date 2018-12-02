@@ -23,11 +23,14 @@
                        value="{{ csrf_token('authenticate') }}"
                 >
                 <div class="form-group">
+                    <p class="text-center">
+                        <a href="{{ path('forgot_password') }}">Forgot password ?</a>
+                    </p>
                     <button class="btn btn-block btn-success" type="submit">
                         Sign in
                     </button>
                 </div>
             </form>
         </div>
-    </form>
+    </div>
 {% endblock %}

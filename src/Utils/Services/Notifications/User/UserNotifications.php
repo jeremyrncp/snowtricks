@@ -12,7 +12,7 @@ use App\Exception\UndefinedEntityException;
 use App\Infrastructure\InfrastructureRenderInterface;
 use App\Infrastructure\InfrastructureValidatorInterface;
 
-class UserNotifications implements UserNotificationsInterface
+class UserNotifications
 {
     /**
      * @var User
