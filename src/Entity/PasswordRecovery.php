@@ -37,7 +37,7 @@ class PasswordRecovery
     private $dateUsed;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="user_related_id", referencedColumnName="id")
      */
     private $userRelated;
@@ -101,7 +101,7 @@ class PasswordRecovery
         return $this;
     }
     /**
-     * @return mixed
+     * @return User
      */
     public function getUserRelated()
     {
