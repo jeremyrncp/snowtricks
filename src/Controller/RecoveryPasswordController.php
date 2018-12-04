@@ -14,14 +14,22 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class RecoveryPasswordController extends Controller
 {
+
+    use SignOutTraitController;
+
     /**
      * @Route("/forgotpassword", name="forgot_password")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager)
+    public function index(Request $request, EntityManagerInterface $entityManager, Security $security)
     {
+        if ($this->isAuthenticated($security)) {
+            return $this->redirectToRoute('index');
+        }
+
         $forgotPassword = $this->createForm(ForgotPasswordType::class);
 
         $forgotPassword->handleRequest($request);
