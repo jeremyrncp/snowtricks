@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\PasswordRecovery;
 use App\Form\ReinitPasswordType;
 use App\Utils\Generic\EncryptionServicesGeneric;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -18,7 +19,7 @@ class ReinitPasswordController extends AbstractController
     /**
      * @Route("/reinitpassword/{token}", options={}, name="reinit_password")
      */
-    public function index($token, Request $request, Security $security)
+    public function index($token, Request $request, Security $security, EntityManagerInterface $entityManager)
     {
         if ($this->isAuthenticated($security)) {
             return $this->redirectToRoute('index');
@@ -38,24 +39,7 @@ class ReinitPasswordController extends AbstractController
         $reinitPassword->handleRequest($request);
 
         if (null !== $reinitPassword->getData()) {
-            $reinitData = $reinitPassword->getData();
-
-            $this->usedToken($passwordRecovery);
-
-            if ($reinitData['email'] !== $passwordRecovery->getUserRelated()->getEmail()) {
-                $this->addFlash(AppController::FLASH_ERROR, 'This email isn\'t valid');
-
-                $this->getDoctrine()->getManager()->persist($passwordRecovery);
-                $this->getDoctrine()->getManager()->flush();
-
-                return $this->render('reinit-password.html.twig', [
-                    'form' => $reinitPassword->createView()
-                ]);
-            }
-
-            $this->reinitPassword($reinitData['password'], $passwordRecovery);
-            $this->addFlash(AppController::FLASH_SUCCESS, 'Password updated successfully');
-            return $this->redirectToRoute('login');
+            return $this->changePassword($entityManager, $reinitPassword, $passwordRecovery);
         }
 
         return $this->render('reinit-password.html.twig', [
@@ -92,7 +76,7 @@ class ReinitPasswordController extends AbstractController
     }
 
     /**
-     * @param $passwordRecovery
+     * @param PasswordRecovery $passwordRecovery
      */
     private function usedToken($passwordRecovery): void
     {
@@ -109,5 +93,33 @@ class ReinitPasswordController extends AbstractController
         $passwordRecovery->getUserRelated()->setPassword($passwordReinit);
         $this->getDoctrine()->getManager()->persist($passwordRecovery);
         $this->getDoctrine()->getManager()->flush();
+    }
+
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param $reinitPassword
+     * @param PasswordRecovery $passwordRecovery
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    private function changePassword(EntityManagerInterface $entityManager, $reinitPassword, $passwordRecovery)
+    {
+        $reinitData = $reinitPassword->getData();
+
+        $this->usedToken($passwordRecovery);
+
+        if ($reinitData['email'] !== $passwordRecovery->getUserRelated()->getEmail()) {
+            $this->addFlash(AppController::FLASH_ERROR, 'This email isn\'t valid');
+
+            $entityManager->persist($passwordRecovery);
+            $entityManager->flush();
+
+            return $this->render('reinit-password.html.twig', [
+                'form' => $reinitPassword->createView()
+            ]);
+        }
+
+        $this->reinitPassword($reinitData['password'], $passwordRecovery);
+        $this->addFlash(AppController::FLASH_SUCCESS, 'Password updated successfully');
+        return $this->redirectToRoute('login');
     }
 }

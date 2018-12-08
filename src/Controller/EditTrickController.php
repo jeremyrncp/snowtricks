@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pictures;
 use App\Entity\Trick;
 use App\Form\TrickType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +18,7 @@ class EditTrickController extends AppController
      * @Route("/trick/{slug}/edit", name="edit_trick")
      * @ParamConverter("trick", class="App\Entity\Trick")
      */
-    public function index(Request $request, Trick $trick)
+    public function index(Request $request, Trick $trick, EntityManagerInterface $entityManager)
     {
         $this->isValidOwner($this->getUser(), $trick->getUser());
 
@@ -28,8 +29,8 @@ class EditTrickController extends AppController
         $trickForm->handleRequest($request);
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
             $trick->setDateUpdate();
-            $this->get('doctrine')->getManager()->persist($trick);
-            $this->get('doctrine')->getManager()->flush();
+            $entityManager->persist($trick);
+            $entityManager->flush();
 
             $this->addFlash(self::FLASH_SUCCESS, 'Your trick has correctly added in our database !');
             return $this->redirectToRoute('index');
