@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Pictures;
 use App\Form\PicturesType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +17,7 @@ class EditPicturesController extends AppController
      * @Route("/pictures/{id}/edit", name="edit_pictures")
      * @ParamConverter("pictures", class="App\Entity\Pictures")
      */
-    public function index(Request $request, Pictures $picture)
+    public function index(Request $request, Pictures $picture, EntityManagerInterface $entityManager)
     {
         $this->isValidOwner($this->getUser(), $picture->getUser());
 
@@ -28,8 +29,8 @@ class EditPicturesController extends AppController
 
         $pictureForm->handleRequest($request);
         if ($pictureForm->isSubmitted() && $pictureForm->isValid()) {
-            $this->get('doctrine')->getManager()->persist($picture);
-            $this->get('doctrine')->getManager()->flush();
+            $entityManager->persist($picture);
+            $entityManager->flush();
 
             $this->addFlash(self::FLASH_SUCCESS, 'Picture was correctly updated');
             return $this->redirectToRoute("view_trick", ['slug' => $picture->getTrick()->getSlug()]);

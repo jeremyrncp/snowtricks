@@ -16,7 +16,6 @@ class AppController extends Controller
     public const FLASH_SUCCESS = 'flash_success';
     public const FLASH_ERROR = 'flash_error';
 
-
     protected function isValidOwner(User $userLogged, User $ownerEntity)
     {
         if ($userLogged->getId() !== $ownerEntity->getId()) {
