@@ -1,0 +1,35 @@
+security:
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
+    providers:
+        in_memory: { memory: ~ }
+        db.user:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|scss|images|js)/
+            security: false
+        main:
+            anonymous: true
+            form_login:
+                check_path: login
+                login_path: login
+                password_parameter: password
+                username_parameter: email
+                target_path_parameter: index
+            logout:
+                path: logout
+                target: /
+            provider: db.user
+
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/trick/add, roles: ROLE_USER }
+        - { path: ^/trick/.*/edit, roles: ROLE_USER }

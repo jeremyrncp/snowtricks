@@ -1,0 +1,85 @@
+{% extends "layout/base.html.twig" %}
+
+{% block stylesheets %}
+<link href="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block header %}
+    <header style="background-image:url(' {{ trick.getPicturePresentation().getPictureRelativePath() }} ');">
+        <h1>{{ trick.name }}</h1>
+    </header>
+{% endblock %}
+
+{% block body %}
+<div class="content view-trick">
+    <section class="medias text-center">
+        <div class="row">
+            {% for picture in trick.pictures %}
+            <div class="col-md-2 col-12">
+                {% include 'elmt/partial/view-picture.html.twig' with {'picture': picture} %}
+            </div>
+            {% endfor %}
+            {% for movie in trick.movies %}
+            <div class="col-md-2 col-12">
+                {% include 'elmt/partial/view-movie.html.twig' with {'movie': movie} %}
+            </div>
+            {% endfor %}
+        </div>
+        <button class="btn btn-primary">View medias</button>
+    </section>
+    <article>
+        {{ trick.description }}
+    </article>
+    <section class="informations">
+        <p>
+            {% set dateFormat = 'Y-m-d H:i' %}
+            <b>Date de création</b> : {{ trick.dateCreate|date(dateFormat) }}<br>
+            <b>Groupe</b> : {{ trick.trickGroup }}<br>
+            {% if trick.dateUpdate is not null %}
+            <b>Date de modification</b> : {{ trick.dateUpdate|date(dateFormat) }}
+            {% endif %}
+        </p>
+        <p>
+            {% if app.user is defined and app.user == trick.user %}
+                <a href="{{ path('edit_trick', {'slug': trick.slug}) }}" class="btn btn-success"><i class="fa fa-edit"></i> Edit trick</a>
+            {% endif %}
+        </p>
+    </section>
+    {% if formComment is defined %}
+    <section class="comments">
+        {% form_theme formComment with 'bootstrap_4_layout.html.twig' %}
+        {{ form_start(formComment) }}
+        {{ form_errors(formComment) }}
+        {{ form_widget(formComment) }}
+        <div class="form-group">
+            <input type="submit" class="btn btn-block btn-success" value="Add comment" />
+        </div>
+        {{ form_end(formComment) }}
+
+        <div class="text-center">
+            <b>{{ comments.getTotalItemCount }} comments</b>
+            {{ knp_pagination_render(comments, 'elmt/partial/pagination.html.twig') }}
+        </div>
+        {% for comment in comments %}
+        <div class="elmt-comments">
+            <span>
+                <img src="{{ asset(comment.user.getAvatar()) }}" alt="Avatar" /><br />
+            </span>
+            <span>
+                <p>
+                    {{ comment.content }}
+                </p>
+            </span>
+            <footer>
+                <p>Added the {{ comment.datecreate|date('Y-m-d H:i:s') }} by <b>{{ comment.user.firstname }} {{ comment.user.lastname }}</b></p>
+            </footer>
+        </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="//code.jquery.com/jquery-latest.js"></script>
+    <script src="//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}

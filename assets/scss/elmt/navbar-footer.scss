@@ -1,0 +1,22 @@
+.elmt-navbar-footer {
+  background: white;
+  border-top: 1px solid $colorBasicLink;
+  bottom: 0;
+  height: 45px;
+  padding: 10px;
+  position: fixed;
+  width: 100%;
+
+  a {
+    color: $colorBasicLink;
+    text-align: center;
+    width: calc(100% / 3);
+  }
+
+  @include media-max($mobileBreakpoint) {
+    display: flex;
+  }
+  @include media-min($mobileBreakpoint) {
+    display: none;
+  }
+}

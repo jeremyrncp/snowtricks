@@ -1,0 +1,12 @@
+{% extends "layout/notification/email.base.html.twig" %}
+
+{% block body %}
+    {% set uriValidation = url('account_validation', {'token': token}) %}
+    <p>Welcome to SnowTricks</p>
+    <p>For use your account, please validate this on click on this link
+        <a href="{{ uriValidation }}" target="_blank">account validation</a> or
+        copy paste this URI <b>
+             {{ uriValidation }}
+        </b> in your navigator.
+    </p>
+{% endblock %}

@@ -1,0 +1,19 @@
+.elmt-trick {
+  padding: 20px 0;
+  header {
+    background-position: center;
+    background-size: cover;
+    min-height: 130px;
+  }
+  a {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+  }
+
+  div {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+}

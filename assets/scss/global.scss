@@ -1,0 +1,33 @@
+body > section {
+  padding: 40px 20px;
+}
+
+.content {
+  padding: 40px 0;
+  position: relative;
+
+  .elmt-goto {
+    color: $colorBasicLink;
+  }
+}
+
+button i, a i {
+  vertical-align: middle;
+}
+
+.display {
+  display: block !important;
+}
+
+/** plugin **/
+html.with-featherlight {
+  overflow: inherit !important;
+}
+
+.collection-trick {
+  height: inherit !important;
+
+  .btn-primary {
+    margin-right: 5px;
+  }
+}

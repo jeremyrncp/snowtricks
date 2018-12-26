@@ -1,0 +1,11 @@
+{% extends "layout/base.html.twig" %}
+{% block header %}
+{% endblock %}
+
+{% set btnSubmitValue = 'Add trick' %}
+{% block body %}
+    {% include "elmt/trick-form.html.twig" with {'btnSubmit': btnSubmitValue, 'title': 'Add a trick'} %}
+{% endblock %}
+{% block javascripts %}
+    {% include "elmt/trick-form-javascript.html.twig" %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "layout/base.html.twig" %}
+
+{% block body %}
+    <div class="row">
+        <div class="offset-md-4"></div>
+        <div class="col-md-4 col-12">
+            {% if error is defined %}
+                <div class="alert alert-danger">
+                    <p class="text-center">
+                        {{ error }}
+                    </p>
+                </div>
+            {% elseif msg is defined and msg == "registerSuccess" %}
+                <div class="alert alert-success">
+                    <p class="text-center">
+                        Your SnowTracks account is created successfully but you must validate this before login in.
+                        One email was sent for validate your account, please verify your e-mail box and click on validation link.
+                    </p>
+                    <p>
+                        <a href="{{ url("index") }}">Go to the home page !</a>
+                    </p>
+                </div>
+            {% endif %}
+
+            {% if form is defined %}
+                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <input
+                        class="btn btn-block btn-success"
+                        type="submit"
+                        value="Register" />
+                {{ form_end(form) }}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

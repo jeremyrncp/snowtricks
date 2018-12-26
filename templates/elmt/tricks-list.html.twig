@@ -1,0 +1,24 @@
+{% if trickCollection is defined %}
+    {% for key,trick in trickCollection %}
+        {% if key % 5 == 0 %}
+        <div class="offset-lg-1 col-lg-2 col-sm-4 col-12 elmt-trick">
+        {% else %}
+        <div class="col-lg-2 col-sm-4 col-12 elmt-trick">
+        {% endif %}
+            {% if trick.getPicturePresentation() is not null %}
+            <header style="background-image:url(' {{ trick.getPicturePresentation().getPictureRelativePath() }} ');"></header>
+            {% else %}
+             <header style="background-image:url({{ asset('img/tricks/default.png') }});"></header>
+            {% endif %}
+            <div>
+                <a href="{{ path('view_trick', {'slug': trick.slug}) }}">
+                    {{ trick.name }}
+                </a>
+                {% if app.user is defined and app.user == trick.user %}
+                    <a href="{{ path('edit_trick', {'slug': trick.slug}) }}"><i class="fa fa-edit"></i></a>
+                    <a data-path="{{ path('delete_trick', {'slug': trick.slug}) }}" class="delete-with-confirmation" href="#tricks"><i class="fa fa-trash"></i></a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
