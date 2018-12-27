@@ -19,12 +19,15 @@ variables:
 hooks:
   build: |
     set -e
-    bin/console assets:install --no-debug
-    bin/console cache:clear
+    php bin/console assets:install --no-debug
+    php bin/console cache:clear
   deploy: |
     set -e
-    bin/console assets:install --symlink --relative public
-    bin/console cache:clear
+    php bin/console assets:install --symlink --relative public
+    php bin/console doctrine:schema:update --force
+    php bin/console doctrine:database:import ./ressources/mysql/data.sql
+    php bin/console cache:clear
+    yarn encore production
   # The relationships of the application with services or other applications.
 # The left-hand side is the name of the relationship as it will be exposed
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand

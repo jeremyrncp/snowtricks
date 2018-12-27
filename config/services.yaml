@@ -6,8 +6,8 @@
 parameters:
     locale: 'en'
     path:
-        avatar: '%kernel.project_dir%\public\img\avatar\'
-    path.trick: '%kernel.project_dir%\public\img\tricks\'
+        avatar: '%kernel.project_dir%/public/img/avatar/'
+    path.trick: '%kernel.project_dir%/public/img/tricks/'
     path.relativetopublic: 'img/tricks/'
     path.public: '%kernel.project_dir%/public/'
 
