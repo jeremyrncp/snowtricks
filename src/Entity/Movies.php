@@ -38,7 +38,7 @@ class Movies
     private $User;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Trick")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Trick", inversedBy="Movies")
      * @ORM\JoinColumn(nullable=false, referencedColumnName="id")
      */
     private $Trick;
