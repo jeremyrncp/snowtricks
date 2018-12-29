@@ -21,7 +21,7 @@
                 <i class="fas fa-search"></i>
                 View more tricks
             </button>
-            {% if app.user is defined %}
+            {% if app.user.username is defined %}
             <a class="btn btn-primary" href="{{ path('add_trick') }}">
                 <i class="fas fa-plus"></i>
                 Add new trick
