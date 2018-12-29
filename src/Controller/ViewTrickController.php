@@ -78,7 +78,8 @@ class ViewTrickController extends AppController
             $entityManager->flush();
 
             $this->addFlash(self::FLASH_SUCCESS, 'Your comment has correctly added !');
-            $comments->setContent("");
+
+            return $this->redirectToRoute("view_trick", ["slug" => $trick->getSlug()]);
         }
 
         return $this->render('viewtrick.html.twig', [
