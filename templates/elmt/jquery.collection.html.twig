@@ -19,6 +19,18 @@
 # %}
 #}
 
+{% block file_widget %}
+    {% spaceless %}
+        {% if data.filename is defined %}
+            <img src="img/tricks/{{ data.filename }}" width="200" class="rounded" />
+            <input type="hidden" value="{{ data }}" id="{{ id }}" name="{{ full_name }}" required="required">
+        {% else %}
+            {{ block('form_widget') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock file_widget %}
+
+
 {% block collection_widget %}
     {% spaceless %}
         {% if prototype is defined %}

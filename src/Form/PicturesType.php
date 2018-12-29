@@ -14,7 +14,8 @@ class PicturesType extends AbstractType
     {
         $builder
             ->add('pictureRelativePath', FileType::class, [
-                'label' => ' '
+                'label' => ' ',
+                'required' => true
             ])
         ;
     }
@@ -22,7 +23,7 @@ class PicturesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Pictures::class,
+            'data_class' => Pictures::class
         ]);
     }
 }

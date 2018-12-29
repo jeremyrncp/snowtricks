@@ -67,13 +67,13 @@ class Trick
 
     /**
      * @var Pictures[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="Trick", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Pictures", mappedBy="Trick", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $Pictures;
 
     /**
      * @var Movies[]
-     * @ORM\OneToMany(targetEntity="App\Entity\Movies", mappedBy="Trick", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Movies", mappedBy="Trick", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $Movies;
 

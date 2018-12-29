@@ -15,7 +15,8 @@ use App\Exception\UndefinedParameterException;
 
 class CopyFilesServicesGeneric implements CopyFilesServicesGenericInterface
 {
-    const MIME_TYPE_VALID = ["image/jpg", "image/png"];
+    const MIME_TYPE_VALID = ["image/jpg", "image/jpeg", "image/png"];
+    const EXTENSION_VALID = ['jpg', 'jpeg', 'png'];
 
     /**
      * @var string

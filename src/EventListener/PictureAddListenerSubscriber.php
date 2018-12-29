@@ -7,11 +7,13 @@
 namespace App\EventListener;
 
 use App\Entity\Pictures;
+use App\Utils\Generic\Files\CopyFilesServicesGeneric;
 use App\Utils\Generic\Files\CopyFilesServicesGenericInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureAddListenerSubscriber implements EventSubscriber
 {
@@ -54,7 +56,7 @@ class PictureAddListenerSubscriber implements EventSubscriber
     {
         $entity = $args->getObject();
 
-        if ($entity instanceof Pictures) {
+        if ($entity instanceof Pictures && $entity->getPictureRelativePath() instanceof UploadedFile) {
             $imgRealPath = $this->copyFilesServicesGeneric->copyToLocalAfterCheckValidityFile(
                 $entity->getPictureRelativePath()
             );
@@ -70,7 +72,7 @@ class PictureAddListenerSubscriber implements EventSubscriber
      */
     private function getImgNameInRealPath(string $realPath): string
     {
-        preg_match('/[a-z0-9]*.png$/i', $realPath, $nameImg);
+        preg_match('/[a-z0-9]*.(' . implode('|', CopyFilesServicesGeneric::EXTENSION_VALID) . ')$/i', $realPath, $nameImg);
 
         if (count($nameImg) === 0) {
             throw new \Exception('Your pattern isn\'t found in your path');

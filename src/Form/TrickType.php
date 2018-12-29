@@ -33,7 +33,6 @@ class TrickType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'entry_type' => PicturesType::class,
-                'required' => true,
                 'prototype' => true,
                 'label' => 'Related pictures',
                 'attr' => array(
@@ -49,7 +48,6 @@ class TrickType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'entry_type' => MoviesType::class,
-                'required' => true,
                 'prototype' => true,
                 'label' => 'Related movies',
                 'attr' => array(

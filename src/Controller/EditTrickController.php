@@ -22,24 +22,57 @@ class EditTrickController extends AppController
     {
         $this->isValidOwner($this->getUser(), $trick->getUser());
 
+        $actualPicturesRelativePathOrderByIdPicture = $this->getPictureRelativePathById($trick);
+
         $trick->getPictures()->filter(\Closure::fromCallable(array($this,'updatePicturesCollection')));
 
         $trickForm = $this->createForm(TrickType::class, $trick);
 
         $trickForm->handleRequest($request);
+
         if ($trickForm->isSubmitted() && $trickForm->isValid()) {
             $trick->setDateUpdate();
+
+            $this->hydratePicturesCollection($trick, $actualPicturesRelativePathOrderByIdPicture);
+
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            $this->addFlash(self::FLASH_SUCCESS, 'Your trick has correctly added in our database !');
+            $this->addFlash(self::FLASH_SUCCESS, 'Your trick has correctly edited in our database !');
             return $this->redirectToRoute('index');
         }
+
 
         return $this->render('edittrick.html.twig', [
             'form' => $trickForm->createView(),
             'errors' => $trickForm->getData()
         ]);
+    }
+
+    private function hydratePicturesCollection(Trick $trick, array $actualPicturesRelativePathOrderByIdPicture)
+    {
+        /** @var Pictures $picture **/
+        foreach ($trick->getPictures() as $picture) {
+            if (null === $picture->getPictureRelativePath() && array_key_exists($picture->getId(), $actualPicturesRelativePathOrderByIdPicture)) {
+                $picture->setPictureRelativePath($actualPicturesRelativePathOrderByIdPicture[$picture->getId()]);
+            }
+        }
+    }
+
+    /**
+     * @param Trick $trick
+     * @return array
+     *
+     */
+    private function getPictureRelativePathById(Trick $trick)
+    {
+        $pictures = [];
+
+        foreach ($this->getDoctrine()->getRepository(Pictures::class)->findBy(['Trick' => $trick]) as $picture) {
+            $pictures[$picture->getId()] = $picture->getPictureRelativePath();
+        }
+
+        return $pictures;
     }
 
     public function updatePicturesCollection(Pictures $picture)

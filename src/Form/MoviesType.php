@@ -12,7 +12,10 @@ class MoviesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('urlMovie', null, ['label' => ' '])
+            ->add('urlMovie', null, [
+                'label' => ' ',
+                'required' => true
+            ])
         ;
     }
 
